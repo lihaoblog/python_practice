@@ -23,7 +23,9 @@ class MyCar():
     # 这里改写str函数
     def __str__(self):
         return f'{self.brand}and{self.type_name}'
-#del
+#del函数，在删除数据的时候默认调用
+    def __del__(self):
+        print(f'wo yao delete')
 
 
 C1=MyCar('BYD',"han",'suv')
