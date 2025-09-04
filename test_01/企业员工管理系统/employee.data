@@ -1,0 +1,1 @@
+[{'name': 'li', 'gender': 'man', 'age': '19', 'mobile_num': '42656+', 'is_leave': True}, {'name': 'zhang', 'gender': 'wm', 'age': '56', 'mobile_num': '2652', 'is_leave': True}, {'name': 'wu', 'gender': 'mam', 'age': '5', 'mobile_num': '6', 'is_leave': True}, {'name': 'zz', 'gender': 'wm', 'age': '53', 'mobile_num': '469', 'is_leave': False}]

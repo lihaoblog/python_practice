@@ -5,19 +5,21 @@ import os
 class EmployeeMannerSystem:
     def __init__(self):
         self.employee_file = 'employee.data'  # 这里把员工信息文件定义为实例属性，其实类属性会更好，不用随便改名字
-        self.employee_back_up = 'employee_bak.data'
+        self.employee_back_up = 'employee_bak.data'  #备份文件名
         self.employee_list = []  # 建一个空列表来存储读出来的数据
+        self.save_flag = True    #该标记是用来标记数据是否已保存
 
     def main(self):
         """ 员工管理系统的额入口"""
         # 1.加载和读取员工的数据文件
         self.load_employee()
-        print(self.load_employee())
+        # print(self.load_employee())
         # 2.显示系统的欢迎页面
         while True:
             self.show_hello()
             num = int(input('请选择功能：'))
             if num == 7:
+                self.save_out()
                 break
             elif num == 1:
                 self.add_employee()  # 实例属性必须要加self来访问
@@ -31,6 +33,15 @@ class EmployeeMannerSystem:
                 self.show_all_employee()
             elif num == 6:
                 self.save_employee()
+    def save_out(self):
+        """
+        系统在修改后未保存，退出时调用该函数自动保存
+        :return:
+        """
+        if not self.save_flag:   #self.save_flag == False这种写法过时了换成not写法
+            self.save_employee()
+            print('save yet')
+
 
     def save_employee(self):
         """
@@ -44,12 +55,13 @@ class EmployeeMannerSystem:
         if os.path.exists(self.employee_back_up):
             os.remove(self.employee_back_up)  # 删掉之前的备份文件
         os.rename(self.employee_file, self.employee_back_up)  # 备份数据，旧文件直接改名备份文件名字
-        with open(self.employee_back_up, 'w', encoding='utf-8') as f:  # 打开文件往里面写数据
+        with open(self.employee_file, 'w', encoding='utf-8') as f:  # 打开文件往里面写数据
             new_list = []
             for emp in self.employee_list:
                 new_list.append(emp.__dict__)
             f.write(str(new_list))  #写入必须要是字符串，这里要转成串
             print('success')
+        self.save_flag = True  # 已保存的表示
 
     def show_all_employee(self):
         """
@@ -81,6 +93,8 @@ class EmployeeMannerSystem:
         up_name = input('请输入要修改的员工姓名')
         for nm in self.employee_list:
             if nm.name == up_name:
+                self.save_flag = False
+
                 new_name = input('请输入新的名字，不修改按回车').strip()
                 nm.name = new_name if new_name else nm.name
 
@@ -94,7 +108,7 @@ class EmployeeMannerSystem:
                 nm.mobile_num = new_mobile_num if new_mobile_num else nm.mobile_num
 
                 new_leave = input('请输入员工是否离职，1离职，0在职，不修改按回车').strip()
-                nm.is_leave = '离职' if new_leave == '1' else nm.is_leave
+                nm.is_leave = '离职' if new_leave == '1' else '在职'
             print('update over')
             print(nm)
             break
@@ -109,6 +123,7 @@ class EmployeeMannerSystem:
         dele_name = input('请输入要删除的员工姓名')
         for nm in self.employee_list:
             if nm.name == dele_name:
+                self.save_flag = False
                 self.employee_list.remove(nm)  # 移除该对象
                 print('remove ok')
                 break
@@ -126,6 +141,7 @@ class EmployeeMannerSystem:
         mobile_num = input('请输入员工联系方式')
         is_leave = input('请输入员工是否离职，1离职，0在职')
         emp = Employee(name, gender, age, mobile_num, is_leave)  # 创建一个对象
+        self.save_flag = False
         self.employee_list.append(emp)  # 把对象加入到列表中
         print(emp)
 
@@ -158,10 +174,10 @@ class EmployeeMannerSystem:
                 lst = eval(data)  # 这个函数和vars类似，不过这个用来转列表,解析成列表方便后续遍历
                 for dict1 in lst:
                     # 拿出来的还是字典类型，用字典取值的方式拿到我们要的值
-                    # self.employee_list.append (Employee(dict1.name,dict1.gender,dict1.sge,dict1.mobile_num,dict1.is_leave))
+                    # self.employee_list.append (Employee(dict1.name,dict1.gender,dict1.age,dict1.mobile_num,dict1.is_leave))
                     self.employee_list.append(
-                        Employee(dict1['name'], dict1['gender'], dict1['sge'], dict1['mobile_num'], dict1['is_leave']))
-                    # print(self.employee_list)
+                        Employee(dict1['name'], dict1['gender'], dict1['age'], dict1['mobile_num'], dict1['is_leave']))
+                    print(self.employee_list)
         finally:
             if f:
                 f.close()
@@ -171,4 +187,6 @@ if __name__ == '__main__':
     obj = EmployeeMannerSystem()
     obj.main()
 
-# [{'name':'lihao'},{'gender':'man'},{'age':30},{'mobile_num':'1582788'},{'is_leave':'1'}]
+
+
+
