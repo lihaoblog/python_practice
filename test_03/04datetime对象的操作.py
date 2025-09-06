@@ -11,7 +11,7 @@ dt3=dt2.strftime('%Y年%m月%d日 %H:%M:%S')  #指定格式转化字符串
 print(dt3)
 
 #返回的日期类型，time库里面是元祖类型
-dt3=datetime.strptime(dt3,'%Y年%m月%d日 %H:%M:%S')  #指定格式转化字符串
+dt3=datetime.strptime(dt3,'%Y年%m月%d日 %H:%M:%S')  #字符串转成datetime类型，可运算
 print(dt3,'aa')
 
 
