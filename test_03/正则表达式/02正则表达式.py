@@ -54,5 +54,5 @@ print(s6)
 s7 = re.match(r"<([a-zA-Z]+)>\w*</\1>", "<html>hhh</html>")  #这里的\1代表第一个正则
 print(s7)
 
-s7 = re.match(r"<(?P<my_name>[a-zA-Z]+)>\w*</(?P=my_name)>", "<html>hhh</html>")  #命名用法
-print(s7)
+s8 = re.match(r"<(?P<my_name>[a-zA-Z]+)>\w*</(?P=my_name)>", "<html>hhh</html>")  #命名用法
+print(s8)
