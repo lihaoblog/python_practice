@@ -1,5 +1,6 @@
 """
 该工具时合并多个列相同的xlsx表格，不相同的会错位
+使用时修改路径
 """
 import pandas as pd
 import os

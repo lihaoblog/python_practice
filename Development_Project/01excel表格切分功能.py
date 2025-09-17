@@ -1,3 +1,7 @@
+"""
+该工具是切分多个表格，需要替换地址和列名，以那一列切分
+使用时修改路径
+"""
 import pandas as pd
 
 df=pd.read_excel(r'C:\Users\lihao\Desktop\dify\产品月度销量数据.xlsx')
