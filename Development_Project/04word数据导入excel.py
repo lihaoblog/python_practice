@@ -34,7 +34,7 @@ info_dict={
     '名称':mingcheng_list,
     '面积':mianji_list
 }
-
+# DataFrame关键字可以把字段转成想要的格式
 df=pd.DataFrame(info_dict)
 print(df)
 df.to_excel(r'C:\Users\lihao\Desktop\dify\word转excel.xlsx',index=False)
